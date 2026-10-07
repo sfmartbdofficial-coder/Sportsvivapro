@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SportsViva - খেলো, পয়েন্ট জেতো, শপিং করো</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Hind Siliguri',system-ui}
+body{background:#06140a;color:#fff;padding-bottom:110px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+@keyframes glow{0%,100%{box-shadow:0 0 10px #facc15,0 0 20px #facc15}50%{box-shadow:0 0 20px #ffeb3b,0 0 40px #ffeb3b}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+.top{background:linear-gradient(180deg,#0f3d0f,#06140a);padding:8px 10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1.5px solid #facc15;position:sticky;top:0;z-index:99}
+.logo{display:flex;align-items:center;gap:6px}
+.logo-c{width:38px;height:38px;background:radial-gradient(#facc15,#a16207);color:#000;border:2px solid #000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:24px}
+.reward{display:flex;align-items:center;gap:10px}
+.rp{background:linear-gradient(90deg,#1a2e05,#2a4a0a);border:1.5px solid #facc15;border-radius:20px;padding:4px 10px;display:flex;align-items:center;gap:6px}
+.rp b{color:#facc15}
+.btn-su{background:#1a5a1a;border:1.5px solid #4ade80;color:#fff;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:700}
+.btn-li{background:transparent;border:1px solid #555;color:#fff;padding:5px 10px;border-radius:20px;font-size:11px}
+.sports-tab{display:flex;gap:8px;padding:10px;overflow-x:auto}
+.s-tab{flex:1;min-width:110px;height:68px;border-radius:14px;position:relative;overflow:hidden;border:1.8px solid #3a7a3a;display:flex;align-items:center;justify-content:center;background:#000}
+.s-tab img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.8}
+.s-tab.active{border-color:#facc15;box-shadow:0 0 12px #facc15;animation:float 3s infinite}
+.s-tab span{position:relative;z-index:2;font-weight:800;font-size:13px;display:flex;align-items:center;gap:5px;background:rgba(0,0,0,0.6);padding:4px 8px;border-radius:10px}
+.live-big{margin:8px 10px;border-radius:18px;height:168px;position:relative;overflow:hidden;border:1.8px solid #facc15;background:#000}
+.live-big img{width:100%;height:100%;object-fit:cover;object-position:top}
+.live-big::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#06140a 35%,transparent 80%)}
+.live-red{position:absolute;top:10px;left:10px;background:#ff1a1a;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:900;z-index:3;animation:blink 1s infinite}
+.live-content{position:absolute;z-index:3;left:10px;right:10px;bottom:10px}
+.score-box{display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.7);border:1px solid #333;padding:6px 10px;border-radius:12px;width:fit-content;margin:6px 0}
+.btn-watch{background:linear-gradient(90deg,#facc15,#ffeb3b);color:#000;padding:7px 14px;border-radius:20px;border:none;font-weight:900;font-size:12px;animation:glow 2s infinite}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 10px;margin-top:8px}
+.card{height:110px;border-radius:16px;overflow:hidden;position:relative;border:1.5px solid #2a6a2a;background:#000}
+.card img{width:100%;height:100%;object-fit:cover}
+.card::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,20,0,0.9) 40%,rgba(0,0,0,0.2))}
+.card-txt{position:absolute;z-index:2;inset:0;padding:10px;display:flex;flex-direction:column;justify-content:space-between}
+.card-txt h3{font-size:15px;font-weight:900}
+.live-pill{background:#22c55e;color:#000;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:800;width:fit-content}
+.ludu-card{background:linear-gradient(135deg,#1a5a1a,#0f3d0f)}
+.reward-note{margin:10px;padding:10px 12px;background:linear-gradient(135deg,#1a3a0a,#2a5a0f);border:1.5px solid #facc15;border-radius:14px;position:relative;overflow:hidden}
+.reward-note::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent);animation:shine 3s infinite}
+.sport-live-sec{margin:8px 10px;border-radius:16px;background:linear-gradient(135deg,#0f3d0f,#1a5a1a);border:1.5px solid #2a6a2a;padding:12px;position:relative;overflow:hidden}
+.go-live-btn{margin-top:10px;background:linear-gradient(90deg,#facc15,#ffeb3b);color:#000;padding:8px 18px;border-radius:20px;font-weight:900;font-size:13px;border:none;display:flex;align-items:center;gap:6px;width:fit-content;animation:glow 2s infinite}
+.options{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:10px}
+.opt{border-radius:14px;padding:10px 6px;text-align:center;height:88px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.opt .icon{width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.25);border:1.5px solid rgba(255,255,255,0.8);display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:4px}
+.store{margin:10px;border-radius:16px;background:linear-gradient(180deg,#0f2a0f,#06140a);border:1.5px solid #2a6a2a;padding:10px}
+.store-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}
+.store-item{background:#123212;border-radius:10px;padding:6px;text-align:center;border:1px solid #2a5a2a}
+.store-item img{width:100%;height:38px;object-fit:contain}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(180deg,#0f2a0f,#06140a);border-top:2px solid #2a6a2a;display:flex;justify-content:space-around;padding:8px 0;z-index:99}
+.bottom div{text-align:center;font-size:10px;color:#7aaa7a} .bottom .active{color:#facc15}
+</style>
+</head>
+<body>
+<div class="top">
+<div class="logo"><div class="logo-c">S</div><div><h1 style="font-size:18px;font-weight:900">Sports<span style="color:#a3e635">Viva</span></h1><p style="font-size:8px;color:#8fcf8f">Play • Watch • Connect</p></div></div>
+<div class="reward"><div class="rp">🟡 <span style="font-size:9px">Reward Points<br><b style="font-size:13px">1,250</b></span></div><div style="position:relative">🔔<span style="position:absolute;top:-6px;right:-6px;background:#ff1a1a;font-size:8px;padding:1px 4px;border-radius:50%">3</span></div><div>👤</div><button class="btn-su">Sign Up</button><button class="btn-li">Log In</button></div>
+</div>
+
+<div class="sports-tab">
+<div class="s-tab active"><img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=300"><span>🏏 Cricket ›</span></div>
+<div class="s-tab"><img src="https://images.unsplash.com/photo-1579952363873-27f3bfad9c0d?w=300"><span>⚽ Football ›</span></div>
+<div class="s-tab"><img src="https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?w=300"><span>🎾 Tennis ›</span></div>
+</div>
+
+<div class="live-big"><img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=700"><div class="live-red">▶ LIVE</div><div class="live-content"><h1 style="font-size:26px;font-weight:900">CRICKET <span style="color:#facc15">LIVE</span></h1><p style="font-size:11px">• Bangladesh vs Sri Lanka</p><div class="score-box">🔴 BAN <b>235/4</b> <span style="font-size:10px;color:#a3e635">(32.1 ov)</span> SL 🟡</div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn-watch">▶ Watch Live ›</button><button style="background:rgba(0,0,0,0.6);border:1px solid #444;color:#fff;padding:6px 10px;border-radius:16px;font-size:10px">🎬 Highlights</button><button style="background:rgba(0,0,0,0.6);border:1px solid #444;color:#fff;padding:6px 10px;border-radius:16px;font-size:10px">📅 Fixtures</button><button style="background:rgba(0,0,0,0.6);border:1px solid #444;color:#fff;padding:6px 10px;border-radius:16px;font-size:10px">👥 Teams</button><button style="background:rgba(0,0,0,0.6);border:1px solid #444;color:#fff;padding:6px 10px;border-radius:16px;font-size:10px">👤 Players</button></div></div></div>
+
+<div class="grid2">
+<div class="card"><img src="https://images.unsplash.com/photo-1579952363873-27f3bfad9c0d?w=400"><div class="card-txt"><div><h3>FOOTBALL</h3><p style="font-size:10px">Live Matches & Fixtures</p></div><span class="live-pill">Live</span></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1622279457486-62dcc4a431d6?w=400"><div class="card-txt"><div><h3>TENNIS</h3><p style="font-size:10px">Live Matches & Fixtures</p></div><span class="live-pill">Live</span></div></div>
+<div class="card ludu-card" style="border-color:#facc15"><img src="https://images.unsplash.com/photo-1606161290889-2a4d48c57d9e?w=400" style="opacity:0.9"><div class="card-txt"><div><h3 style="color:#facc15">LUDU</h3><p style="font-size:11px">Play with Friends<br>& Family</p></div><div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:9px;color:#a3e635">খেলো আর জেতো</span><span style="background:#000;border:1px solid #facc15;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center">›</span></div></div></div>
+<div class="card" style="border-color:#facc15"><img src="https://images.unsplash.com/photo-1586165368502-1bad197a6461?w=400" style="opacity:0.9"><div class="card-txt"><div><h3 style="color:#ffde8a">CARROM BOARD</h3><p style="font-size:11px">Classic Game<br>Real Fun</p></div><div style="display:flex;justify-content:space-between"><span style="font-size:9px;color:#a3e635">আসল মজা</span><span style="background:#000;border:1px solid #facc15;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center">›</span></div></div></div>
+</div>
+
+<div class="reward-note">
+<h3 style="font-size:14px;color:#facc15">🎉 খেলো, পয়েন্ট উপার্জন করো, শপিং করো!</h3>
+<p style="font-size:11px;margin-top:4px;line-height:1.4">আপনি গেম খেলে যে <b style="color:#facc15">Reward Points</b> পাবেন, তা দিয়ে সহজেই<br>💰 <b>১০০ পয়েন্ট = ২০ টাকা</b> মোবাইল রিচার্জ • 🎁 গিফট কার্ড • 🛍️ স্পোর্টস শপিং করতে পারবেন!<br><span style="color:#a3e635;font-size:10px">✨ কোনো ক্যাশ উইথড্র নয়, শুধু মজা আর কেনাকাটা!</span></p>
+</div>
+
+<div class="sport-live-sec">
+<div style="display:flex;justify-content:space-between"><div><div style="display:flex;align-items:center;gap:6px"><span style="background:#ff1a1a;padding:2px 6px;border-radius:4px;font-size:9px;font-weight:900">▶ LIVE</span><h2 style="font-size:16px;font-weight:900">Sports <span style="color:#facc15">Live</span></h2></div><p style="font-size:10px;color:#a3e635">Go Live • Share Moments • Build Community</p><div style="display:flex;gap:12px;margin-top:8px;font-size:8px;text-align:center"><div>📺<br>Live<br>Matches</div><div>🏃<br>Practice<br>Sessions</div><div>🏆<br>Local<br>Tournaments</div><div>🎙️<br>Commentary</div><div>👥<br>Community<br>Events</div></div><div class="go-live-btn">((•)) GO LIVE ›</div></div><div style="text-align:right"><p style="font-family:cursive;color:#facc15;font-size:18px;transform:rotate(-3deg)">Your Game<br>Your Story</p><div style="margin-top:6px;border:1.5px solid #facc15;border-radius:10px;overflow:hidden;width:110px;height:70px;background:#000"><div style="background:#ff1a1a;font-size:8px;padding:2px 4px;width:fit-content">● LIVE</div><img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=200" style="width:100%;height:100%;object-fit:cover;margin-top:-12px"></div></div></div>
+</div>
+
+<div class="options">
+<div class="opt" style="background:linear-gradient(135deg,#22c55e,#15803d)"><div class="icon">👥</div><b style="font-size:10px">Find Player</b></div>
+<div class="opt" style="background:linear-gradient(135deg,#eab308,#a16207)"><div class="icon">👑</div><b style="font-size:10px">Membership</b><p style="font-size:7px">Join & Get Benefits</p></div>
+<div class="opt" style="background:linear-gradient(135deg,#a855f7,#6d28d9)"><div class="icon">❓</div><b style="font-size:10px">Quiz</b><p style="font-size:7px">Test Your Knowledge</p></div>
+<div class="opt" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)"><div class="icon">📱</div><b style="font-size:10px">Mobile Recharge</b><p style="font-size:7px">100 Point = 20 TK</p></div>
+<div class="opt" style="background:linear-gradient(135deg,#ec4899,#be185d)"><div class="icon">🎁</div><b style="font-size:10px">Gift Cards</b><p style="font-size:7px">For Your Loved Ones</p></div>
+<div class="opt" style="background:linear-gradient(135deg,#f97316,#c2410c)"><div class="icon">🛒</div><b style="font-size:10px">Sports Store</b><p style="font-size:7px">Gear Up Your Game</p></div>
+<div class="opt" style="background:linear-gradient(135deg,#14b8a6,#0f766e)"><div class="icon">🔍</div><b style="font-size:10px">Research</b><p style="font-size:7px">Stats & Insights</p></div>
+<div class="opt" style="background:linear-gradient(135deg,#6b7280,#374151)"><div class="icon">⊞</div><b style="font-size:10px">More Options</b><p style="font-size:7px">Explore More</p></div>
+<div class="opt" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)"><div class="icon">🎮</div><b style="font-size:10px">Game Zone</b><p style="font-size:7px">Fun & Entertainment</p></div>
+</div>
+
+<div class="store">
+<div style="display:flex;justify-content:space-between;align-items:center"><h3 style="font-size:14px">🛒 Sports Store <span style="font-size:9px;color:#a3e635">Jerseys • Bats • Balls • Equipment • Electronics • Mobile Recharge • More</span></h3><button style="background:linear-gradient(90deg,#facc15,#ffeb3b);color:#000;padding:5px 12px;border-radius:16px;border:none;font-weight:800;font-size:11px">Shop Now ›</button></div>
+<div class="store-grid">
+<div class="store-item"><img src="https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=100"><p style="font-size:8px">Cricket Jerseys</p></div>
+<div class="store-item"><img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=100"><p style="font-size:8px">Bats</p></div>
+<div class="store-item"><img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=100"><p style="font-size:8px">Balls</p></div>
+<div class="store-item"><img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=100"><p style="font-size:8px">Sports Equipment</p></div>
+</div>
+</div>
+
+<div style="text-align:center;padding:8px;background:#081c0a;border-top:1px solid #1a5a1a;font-size:9px;color:#6aaa6a">⭐ Reward Points | 🎁 Redeem in Store | 🔒 No Cash Withdrawal<br><span style="font-family:cursive;color:#facc15;font-size:11px">Sports • Games • Community — All in One Place</span></div>
+
+<div class="bottom"><div class="active">🏠<br>Home</div><div>⚽<br>Matches</div><div>🎮<br>Games</div><div>🛒<br>Store</div><div>👤<br>Profile</div></div>
+</body>
+  </html>
