@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="bn"><link rel="stylesheet" href="game.css">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SportsViva - খেলো, পয়েন্ট জেতো, শপিং করো</title>
@@ -189,66 +189,10 @@ function calcPot(){
     <br><span style="font-size:10px;color:#facc15">📊 4 জনে 50 করে = 200 পয়েন্ট, উইনার পাবে 180 পয়েন্ট</span>
   `;
 }
-function startGame(){
-  let entry = 50;
-  if(userPoints < entry){ alert('❌ আপনার পয়েন্ট কম! মিনিমাম 50 পয়েন্ট লাগবে। গেম খেলে পয়েন্ট জমান।'); return; }
-  userPoints -= entry;
-  localStorage.setItem('sv_points', userPoints);
-  updatePointsDisplay();
-  
-  // ফেয়ার গেম - সার্ভার সাইড র‍্যান্ডম (চিট প্রটেকশন)
-  closeGame();
-  let total = entry * selectedPlayers;
-  let winner = total - Math.floor(total*0.1);
-  let win = Math.random() < 0.5; // 50% ফেয়ার চান্স
-  
-  setTimeout(()=>{
-    if(win){
-      userPoints += winner;
-      localStorage.setItem('sv_points', userPoints);
-      updatePointsDisplay();
-      alert(`🎉 ${currentGame} এ জিতেছেন!\\n\\n🏆 আপনি পেয়েছেন: ${winner} পয়েন্ট\\n💰 বর্তমান পয়েন্ট: ${userPoints}\\n\\n💡 এই পয়েন্ট দিয়ে এখন Shop থেকে কেনাকাটা করতে পারবেন!\\n100 পয়েন্ট = 20 টাকা`);
-    }else{
-      alert(`😔 হেরে গেছেন!\\n\\n💰 এন্ট্রি ${entry} পয়েন্ট কাটা হয়েছে\\n🏦 বর্তমান পয়েন্ট: ${userPoints}\\n\\nআবার চেষ্টা করুন!`);
-    }
-  }, 800);
-}
 
-// আপনার আগের কার্ডগুলোকে ক্লিকেবল করা
-document.addEventListener('DOMContentLoaded', ()=>{
-  updatePointsDisplay();
-  // LUDO কার্ড
-  document.querySelectorAll('.card').forEach(card=>{
-    let txt = card.innerText;
-    if(txt.includes('LUDU') || txt.includes('LUDO')){
-      card.style.cursor='pointer';
-      card.onclick=()=>openGame('LUDO');
-    }
-    if(txt.includes('CARROM')){
-      card.style.cursor='pointer';
-      card.onclick=()=>openGame('CARROM BOARD');
-    }
-  });
-  // নিচের অপশনগুলো
-  document.querySelectorAll('.opt').forEach(opt=>{
-    let t = opt.innerText;
-    if(t.includes('Mobile Recharge')){
-      opt.style.cursor='pointer';
-      opt.onclick=()=>{
-        let need = 100;
-        if(userPoints < need){ alert(`❌ রিচার্জ করতে ${need} পয়েন্ট লাগবে। আপনার আছে ${userPoints} পয়েন্ট।\\n100 পয়েন্ট = 20 টাকা`); return; }
-        if(confirm(`📱 100 পয়েন্ট = 20 টাকা রিচার্জ করবেন?\\nবর্তমান: ${userPoints} পয়েন্ট`)){
-          userPoints -= 100;
-          localStorage.setItem('sv_points', userPoints);
-          updatePointsDisplay();
-          alert('✅ 20 টাকা রিচার্জ সফল! পয়েন্ট কাটা হয়েছে।');
-        }
-      }
-    }
-    if(t.includes('Sports Store')){
-      opt.onclick=()=>{ document.querySelector('.store').scrollIntoView({behavior:'smooth'}); }
-    }
-  });
-});
+
+ 
 </script>
-<!-- ===== END GAME LOGIC ===== -->
+<script src="game.js"></script>
+</body>
+</html>
