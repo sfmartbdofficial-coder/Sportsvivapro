@@ -1,46 +1,95 @@
-// ===== SPORTSVIVA GAME SYSTEM V3 - আলাদা ফাইল =====
-let selectedPlayers=4, selectedEntry=50, offlinePlayers=2, currentGame='LUDO', gameMode='online';
-let userPoints=parseInt(localStorage.getItem('sv_points')||'1150');
+let selectedPlayers = 2;
+let currentGame = '';
 
-function updatePoints(){let rp=document.querySelector('.rp b'); if(rp) rp.innerText=userPoints.toLocaleString();}
-function openGame(type){currentGame=type; document.getElementById('gameTitle').innerText=type; document.getElementById('gameModal').style.display='flex'; calcPot();}
-function closeGame(){document.getElementById('gameModal').style.display='none'}
-function setMode(m){
-  gameMode=m;
-  document.querySelectorAll('.m-tab').forEach(e=>e.classList.remove('active'));
-  document.getElementById(m=='online'?'modeOnline':m=='offline'?'modeOffline':'modeBt').classList.add('active');
-  document.getElementById('onlineSection').style.display=m=='online'?'block':'none';
-  document.getElementById('offlineSection').style.display=m=='offline'?'block':'none';
-  document.getElementById('btSection').style.display=m=='bt'?'block':'none';
-  document.getElementById('playBtn').innerText=m=='online'?`🎲 খেলা শুরু (${selectedEntry} পয়েন্ট)`:(m=='offline'?`🎮 অফলাইন খেলা শুরু (${offlinePlayers} জন)`:`📡 ব্লুটুথ খুঁজুন`);
+function openGame(name){
+  currentGame = name;
+  selectedPlayers = 2;
+  document.getElementById('gameTitle').innerText = name;
+  calcPot();
+  document.getElementById('gameModal').style.display = 'flex';
+  document.getElementById('gameModal').style.alignItems = 'center';
+  document.getElementById('gameModal').style.justifyContent = 'center';
 }
-function selectP(el,n){document.querySelectorAll('#onlineSection .p-opt').forEach(o=>o.classList.remove('active')); el.classList.add('active'); selectedPlayers=n; calcPot();}
-function selOff(el,n){document.querySelectorAll('#offlineSection .p-opt').forEach(o=>o.classList.remove('active')); el.classList.add('active'); offlinePlayers=n;}
-function selectE(el,v){document.querySelectorAll('.e-opt').forEach(o=>o.classList.remove('active')); el.classList.add('active'); selectedEntry=v; calcPot();}
+
+function closeGame(){
+  document.getElementById('gameModal').style.display = 'none';
+}
+
+function selectP(el,num){
+  document.querySelectorAll('.p-opt').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+  selectedPlayers = num;
+  calcPot();
+}
+
 function calcPot(){
-  let total=selectedEntry*selectedPlayers; let winner=total-Math.floor(total*0.1);
-  let info=document.getElementById('entryInfo');
-  if(info) info.innerHTML=`💰 এন্ট্রি: <b>${selectedEntry}</b> x ${selectedPlayers}=${total} পয়েন্ট<br>🥇 উইনার: <b style="color:#facc15">${winner} পয়েন্ট</b> (≈ ${(winner/100*20)} টাকা)<br><span style="font-size:9px">📊 200x2=400 পট, উইনার 360 | 300x4=1200 পট, উইনার 1080</span>`;
-  if(gameMode=='online'){let b=document.getElementById('playBtn'); if(b) b.innerText=`🎲 খেলা শুরু (${selectedEntry} পয়েন্ট কাটবে)`;}
+  let entry = 50;
+  let total = entry * selectedPlayers;
+  let charge = Math.floor(total*0.1);
+  let winner = total - charge;
+  document.getElementById('entryInfo').innerHTML = `
+    💰 এন্ট্রি: <b>${entry} পয়েন্ট</b> (প্রতি জন)<br>
+    🏆 টোটাল পট: <b>${total} পয়েন্ট</b> (${selectedPlayers} জন)<br>
+    🥇 উইনার পাবে: <b style="color:#facc15">${winner} পয়েন্ট</b><br>
+    <span style="font-size:10px;color:#8fcf8f">10% চার্জ কাটা হবে</span>
+  `;
 }
+
 function startGame(){
-  if(gameMode=='offline'){alert('🎮 অফলাইন '+currentGame+' শুরু!\n\n👥 '+offlinePlayers+' জন এক মোবাইলে পালা করে খেলুন\n🎲 পয়েন্ট কাটবে না, শুধু মজা!'); closeGame(); return;}
-  if(gameMode=='bt'){alert('📡 ব্লুটুথ মোড\n\n1. ব্লুটুথ অন করুন\n2. বন্ধুর ফোনে SportsViva ওপেন করুন\n3. কানেক্ট করুন\n\nনেট ছাড়া খেলা!'); closeGame(); return;}
-  if(userPoints<selectedEntry){alert('❌ পয়েন্ট কম! আছে '+userPoints+', লাগবে '+selectedEntry); return;}
-  userPoints-=selectedEntry; localStorage.setItem('sv_points',userPoints); updatePoints(); closeGame();
-  let total=selectedEntry*selectedPlayers; let winner=total-Math.floor(total*0.1);
+  let pointsEl = document.querySelector('[class*=\"Reward\"]') || document.getElementById('userPoints');
+  let currentPoints = 1540; // আপনার পয়েন্ট
+  let entry = 50;
+  
+  if(currentPoints < entry){
+    alert('❌ পয়েন্ট কম আছে! আগে গেম খেলে পয়েন্ট জমান!');
+    return;
+  }
+
+  // এখানে আসল গেম শুরু হবে
+  closeGame();
+  
+  // সুন্দর লোডিং
+  let loading = document.createElement('div');
+  loading.id = 'gameLoading';
+  loading.style = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.9);z-index:10000;display:flex;flex-direction:column;justify-content:center;align-items:center;color:white;';
+  loading.innerHTML = `
+    <div style="font-size:40px; margin-bottom:15px;">🎮</div>
+    <div style="font-size:18px; font-weight:bold; color:#facc15;">${currentGame} শুরু হচ্ছে...</div>
+    <div style="margin-top:10px;">${selectedPlayers} জন প্লেয়ার খুঁজছি...</div>
+    <div style="margin-top:15px; width:80%; max-width:300px; height:6px; background:#374151; border-radius:10px; overflow:hidden;">
+      <div id="progress" style="width:0%; height:100%; background:#facc15; transition:width 2s;"></div>
+    </div>
+  `;
+  document.body.appendChild(loading);
+  
+  setTimeout(()=>{ document.getElementById('progress').style.width='100%'; },100);
+  
   setTimeout(()=>{
-    if(Math.random()<0.48){
-      userPoints+=winner; localStorage.setItem('sv_points',userPoints); updatePoints();
-      alert('🎉 '+currentGame+' এ জিতেছেন!\n\n🏆 পেয়েছেন: '+winner+' পয়েন্ট\n💰 বর্তমান: '+userPoints+' পয়েন্ট\n\n💡 Shop থেকে কেনাকাটা করুন! 100 পয়েন্ট = 20 টাকা');
-    }else{
-      alert('😔 হেরে গেছেন!\n\n💰 এন্ট্রি '+selectedEntry+' কাটা হয়েছে\n🏦 বর্তমান: '+userPoints+'\n\nআবার চেষ্টা করুন!');
+    document.body.removeChild(loading);
+    
+    // এখানে আপনি আসল গেমের লিংক দিবেন
+    // এখন ডেমো হিসেবে 3 সেকেন্ড পর জেতার মেসেজ দেখাবে
+    
+    if(confirm(`🎯 ${currentGame} খেলা শুরু করবেন?\n\n(এখন ডেমো চলছে, OK চাপলে 3 সেকেন্ড পর রেজাল্ট আসবে)`)){
+      
+      let playingDiv = document.createElement('div');
+      playingDiv.style = 'position:fixed;top:0;left:0;width:100%;height:100%;background:#111827;z-index:10000;display:flex;justify-content:center;align-items:center;flex-direction:column;color:white;';
+      playingDiv.innerHTML = '<div style="font-size:50px;">🎯</div><div style="margin-top:10px; color:#facc15;">গেম চলছে...</div><div style="font-size:12px; margin-top:5px;">জেতার চেষ্টা করুন!</div>';
+      document.body.appendChild(playingDiv);
+      
+      setTimeout(()=>{
+        document.body.removeChild(playingDiv);
+        
+        // জেতার পর আপনার ওই সুন্দর মেসেজটা
+        let winPoints = 90;
+        let newTotal = 1630;
+        
+        setTimeout(()=>{
+          alert(`🎉 ${currentGame} এ জিতেছেন!\n\n🏆 পেয়েছেন: ${winPoints} পয়েন্ট\n💰 বর্তমান: ${newTotal} পয়েন্ট\n\n💡 Shop থেকে কেনাকাটা করুন! 100 পয়েন্ট = 20 টাকা`);
+          location.reload();
+        },300);
+        
+      },3000); // 3 সেকেন্ড খেলার সময়
     }
-  },600);
+  },2500);
 }
-document.addEventListener('DOMContentLoaded',()=>{updatePoints(); let e=document.getElementById('entryInfo'); if(e) calcPot();
-  document.querySelectorAll('.card').forEach(c=>{
-    if(c.innerText.includes('LUDU')){c.style.cursor='pointer'; c.onclick=()=>openGame('LUDO');}
-    if(c.innerText.includes('CARROM')){c.style.cursor='pointer'; c.onclick=()=>openGame('CARROM BOARD');}
-  });
-});
