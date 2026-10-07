@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SportsViva Pro - Ultimate</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,Segoe UI,Roboto}
+body{background:linear-gradient(180deg,#1e8a1e,#0e3a10);color:#fff;padding-bottom:100px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.2}}
+@keyframes glow{0%,100%{box-shadow:0 0 12px #facc15}50%{box-shadow:0 0 30px #facc15,0 0 50px #facc15}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes zoom{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.topbar{background:#081c0a;padding:10px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #1a5a1a}
+.auth{display:flex;gap:8px}
+.btn-login{border:1.8px solid #facc15;color:#facc15;background:transparent;padding:7px 18px;border-radius:22px;font-weight:800;font-size:12px}
+.btn-signup{background:linear-gradient(90deg,#facc15,#ffeb3b);color:#000;padding:7px 20px;border-radius:22px;font-weight:900;font-size:12px;border:none;animation:glow 2s infinite}
+.header{padding:12px 14px;display:flex;justify-content:space-between;align-items:center;background:linear-gradient(180deg,#229422,#123d12)}
+.logo{display:flex;align-items:center;gap:9px}
+.logo-c{width:44px;height:44px;background:#000;border:2.5px solid #facc15;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:22px;animation:bounce 2s infinite}
+.points{background:linear-gradient(90deg,#facc15,#ffeb3b);color:#000;padding:6px 14px;border-radius:22px;font-weight:900;font-size:13px;animation:float 3s infinite}
+.tabs{display:flex;gap:8px;padding:10px 12px;overflow-x:auto;background:#123d12}
+.tab{background:linear-gradient(135deg,#28a728,#123d12);border:1.8px solid #facc15;border-radius:14px;padding:9px 16px;font-weight:800;font-size:13px;white-space:nowrap}
+.live-banner{margin:12px;border-radius:20px;height:192px;position:relative;overflow:hidden;border:2px solid #3ac43a;background:#000}
+.live-banner img{width:100%;height:100%;object-fit:cover;animation:zoom 8s infinite ease-in-out}
+.live-banner::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,30,5,0.92) 30%,rgba(5,30,5,0.35))}
+.live-tag{position:absolute;top:12px;left:12px;background:#ff1a1a;padding:5px 12px;border-radius:10px;font-size:12px;font-weight:900;z-index:3;animation:blink 1s infinite}
+.banner-txt{position:absolute;z-index:3;left:14px;bottom:14px;right:14px}
+.btn-watch{background:linear-gradient(90deg,#facc15,#ffeb3b);color:#000;padding:8px 18px;border-radius:20px;border:none;font-weight:900;font-size:12px}
+.btn-h{background:rgba(0,0,0,0.65);color:#fff;padding:8px 14px;border-radius:20px;border:1px solid #4a9a4a;font-size:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:0 12px;margin-top:12px}
+.card{height:154px;border-radius:18px;overflow:hidden;position:relative;border:2px solid #3ac43a;background:#000}
+.card img{width:100%;height:100%;object-fit:cover;animation:zoom 12s infinite}
+.card::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,0.1),rgba(0,0,0,0.85))}
+.card-info{position:absolute;z-index:2;inset:0;padding:12px;display:flex;flex-direction:column;justify-content:space-between}
+.pill-live{background:#22c55e;padding:5px 12px;border-radius:14px;font-size:11px;font-weight:800;width:fit-content}
+.pill-play{background:linear-gradient(90deg,#16a34a,#22c55e);padding:5px 12px;border-radius:14px;font-size:11px;font-weight:800;width:fit-content}
+.s-live{margin:16px 12px;border-radius:20px;background:linear-gradient(135deg,#1d7a1d,#2aa52a);border:2px solid #3ac43a;padding:14px}
+.go-live{width:68%;margin:12px auto 0;background:linear-gradient(90deg,#facc15,#ffeb3b);color:#000;padding:12px;border-radius:26px;text-align:center;font-weight:900;animation:glow 2s infinite}
+.tiles{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:14px 12px}
+.tile{border-radius:16px;padding:14px 6px;text-align:center;height:100px;display:flex;flex-direction:column;align-items:center;justify-content:center;animation:float 4s infinite;border:1px solid rgba(255,255,255,0.2);box-shadow:0 4px 12px rgba(0,0,0,0.4)}
+.tile .ic{width:42px;height:42px;border-radius:50%;border:2px solid #fff;display:flex;align-items:center;justify-content:center;margin-bottom:6px;background:rgba(0,0,0,0.25);font-size:18px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(180deg,#144214,#081c0a);border-top:2px solid #2a8a2a;display:flex;justify-content:space-around;padding:10px 0 8px;z-index:99}
+.bottom div{text-align:center;font-size:10px;color:#7aba7a} .bottom .active{color:#facc15;font-weight:900}
+</style>
+</head>
+<body>
+<div class="topbar"><span>⭐ Welcome to SportsViva Pro</span><div class="auth"><button class="btn-login">Log In</button><button class="btn-signup">Sign Up</button></div></div>
+<div class="header"><div class="logo"><div class="logo-c">S</div><div><h1 style="font-size:21px;font-weight:900">Sports<span style="color:#a3e635">Viva</span></h1><p style="font-size:10px;color:#a3e635">Play • Watch • Connect</p></div></div><div style="display:flex;gap:8px;align-items:center"><div class="points">⭐ 1,250</div><div style="width:34px;height:34px;background:#226622;border-radius:50%;display:flex;align-items:center;justify-content:center">🔔</div><div style="width:34px;height:34px;background:#226622;border-radius:50%;display:flex;align-items:center;justify-content:center">👤</div></div></div>
+<div class="tabs"><div class="tab">🏏 Cricket ›</div><div class="tab">⚽ Football ›</div><div class="tab">🎾 Tennis ›</div><div class="tab">🎲 Ludo ›</div><div class="tab">🎯 Carrom ›</div><div class="tab">🏸 Badminton ›</div></div>
+<div class="live-banner"><img src="https://images.unsplash.com/photo-1540747913346-19e32dc3e97e?w=700"><div class="live-tag">▶ LIVE</div><div class="banner-txt"><h1 style="font-size:32px;font-weight:900">CRICKET <span style="color:#facc15">LIVE</span></h1><p style="font-size:12px">• Bangladesh vs Sri Lanka</p><p style="margin-top:4px">🇧🇩 BAN <b style="font-size:23px">249/4</b> <span style="font-size:12px;color:#a3e635">(33.2 ov)</span> SL 🇱🇰</p><div style="display:flex;gap:8px;margin-top:10px"><button class="btn-watch">▶ Watch Live ›</button><button class="btn-h">Highlights</button><button class="btn-h">Fixtures</button></div></div></div>
+<div class="grid">
+<div class="card"><img src="https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=500"><div class="card-info"><div><h3>CRICKET</h3><p style="font-size:11px;color:#cbd5c0">Live Matches & Fixtures</p></div><div style="display:flex;justify-content:space-between"><span class="pill-live">● Live</span><span style="width:28px;height:28px;background:#000;border:1.5px solid #facc15;border-radius:50%;display:flex;align-items:center;justify-content:center">›</span></div></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1579952363873-27f3bfad9c0d?w=500"><div class="card-info"><div><h3>FOOTBALL</h3><p style="font-size:11px;color:#cbd5c0">Live Matches & Fixtures</p></div><div style="display:flex;justify-content:space-between"><span class="pill-live">● Live</span><span>›</span></div></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1595435934249-5df7ed86e1c0?w=500"><div class="card-info"><div><h3>TENNIS</h3><p style="font-size:11px;color:#cbd5c0">Live Matches & Fixtures</p></div><div style="display:flex;justify-content:space-between"><span class="pill-live">● Live</span><span>›</span></div></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1606161290889-2a4d48c57d9e?w=500"><div class="card-info"><div><h3 style="color:#facc15">LUDO</h3><p style="font-size:11px;color:#cbd5c0">Play with Friends</p></div><div style="display:flex;justify-content:space-between"><span class="pill-play">Play Now</span><span>›</span></div></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1586165368502-1bad197a6461?w=500"><div class="card-info"><div><h3 style="color:#facc15">CARROM BOARD</h3><p style="font-size:11px;color:#cbd5c0">Classic Game Real Fun</p></div><div style="display:flex;justify-content:space-between"><span class="pill-play">Play Now</span><span>›</span></div></div></div>
+<div class="card"><img src="https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?w=500"><div class="card-info"><div><h3>BADMINTON</h3><p style="font-size:11px;color:#cbd5c0">Smash & Rally Action</p></div><div style="display:flex;justify-content:space-between"><span class="pill-live">● Live</span><span>›</span></div></div></div>
+</div>
+<div class="s-live"><div style="display:flex;align-items:center;gap:8px"><span style="background:#ff1a1a;padding:3px 8px;border-radius:6px;font-size:10px;font-weight:900">● LIVE</span><h2 style="font-size:18px;font-weight:900">Sports <span style="color:#facc15">Live</span></h2></div><p style="font-size:11px;color:#d1f0d1;margin-top:4px">Go Live • Share Moments • Build Community</p><div style="display:flex;justify-content:space-between;margin:12px 0;text-align:center;font-size:9px"><div>📺<br>Live<br>Matches</div><div>🏃<br>Practice</div><div>🏆<br>Local<br>Tournaments</div><div>🎙️<br>Commentary</div><div>👥<br>Community</div></div><div class="go-live">((•)) GO LIVE ›</div><div style="text-align:right;margin-top:8px;font-family:cursive;color:#facc15;font-size:22px">Your Game<br>Your Story</div></div>
+<div class="tiles">
+<div class="tile" style="background:linear-gradient(135deg,#22c55e,#16a34a)"><div class="ic">👥</div><b style="font-size:11px">Find Player</b><p style="font-size:8px">Connect & Play</p></div>
+<div class="tile" style="background:linear-gradient(135deg,#eab308,#ca8a04)"><div class="ic">👑</div><b style="font-size:11px">Membership</b><p style="font-size:8px">Join & Benefits</p></div>
+<div class="tile" style="background:linear-gradient(135deg,#a855f7,#7e22ce)"><div class="ic">❓</div><b style="font-size:11px">Quiz</b><p style="font-size:8px">Test Knowledge</p></div>
+<div class="tile" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)"><div class="ic">📱</div><b style="font-size:10px">Mobile Recharge</b><p style="font-size:8px">Quick & Easy</p></div>
+<div class="tile" style="background:linear-gradient(135deg,#ec4899,#be185d)"><div class="ic">🎁</div><b style="font-size:11px">Gift Cards</b><p style="font-size:8px">For Loved Ones</p></div>
+<div class="tile" style="background:linear-gradient(135deg,#f97316,#c2410c)"><div class="ic">🛒</div><b style="font-size:11px">Sports Store</b><p style="font-size:8px">Gear Up</p></div>
+<div class="tile" style="background:linear-gradient(135deg,#14b8a6,#0f766e)"><div class="ic">🔍</div><b style="font-size:11px">Research</b><p style="font-size:8px">Stats & Insights</p></div>
+<div class="tile" style="background:linear-gradient(135deg,#6b7280,#374151)"><div class="ic">⊞</div><b style="font-size:10px">More Options</b><p style="font-size:8px">Explore More</p></div>
+<div class="tile" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)"><div class="ic">🎮</div><b style="font-size:11px">Game Zone</b><p style="font-size:8px">Fun & Games</p></div>
+<div class="tile" style="background:linear-gradient(135deg,#10b981,#047857)"><div class="ic">📈</div><b style="font-size:11px">Live Score</b><p style="font-size:8px">Real-time</p></div>
+<div class="tile" style="background:linear-gradient(135deg,#ef4444,#b91c1c)"><div class="ic">▶</div><b style="font-size:11px">Highlights</b><p style="font-size:8px">Best Moments</p></div>
+<div class="tile" style="background:linear-gradient(135deg,#06b6d4,#0891b2)"><div class="ic">⚙️</div><b style="font-size:11px">Settings</b><p style="font-size:8px">Manage App</p></div>
+</div>
+<div class="bottom"><div class="active">🏠<br>Home</div><div>⚽<br>Matches</div><div>🎲<br>Games</div><div>🛍️<br>Store</div><div>👤<br>Profile</div></div>
+</body>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                          </html>
