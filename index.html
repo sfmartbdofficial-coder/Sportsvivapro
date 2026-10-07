@@ -190,9 +190,25 @@ function calcPot(){
   `;
 }
 
-
+  }
+  </script>
+  
+  <div id="gameModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:9999; justify-content:center; align-items:center;">
+    <div style="background:#1f2937; padding:20px; border-radius:15px; width:90%; max-width:350px; text-align:center; border:2px solid #facc15;">
+      <h3 id="gameTitle" style="color:#facc15;"></h3>
+      <div id="entryInfo" style="color:white; margin-bottom:15px;"></div>
+      <div style="display:flex; gap:8px; justify-content:center; margin-bottom:15px;">
+        <button class="p-opt" onclick="selectP(this,2)">2P</button>
+        <button class="p-opt" onclick="selectP(this,3)">3P</button>
+        <button class="p-opt" onclick="selectP(this,4)">4P</button>
+      </div>
+      <button onclick="startGame()" style="background:#facc15; color:black; padding:10px; width:100%; border-radius:8px; font-weight:bold;">খেলা শুরু</button>
+      <button onclick="closeGame()" style="background:#374151; color:white; padding:8px; width:100%; border-radius:8px; margin-top:8px;">বন্ধ</button>
+    </div>
+  </div>
+  
+  <script src="game.js"></script>
  
-</script>
-<script src="game.js"></script>
+
 </body>
 </html>
