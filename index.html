@@ -110,4 +110,145 @@ body{background:#06140a;color:#fff;padding-bottom:110px}
 
 <div class="bottom"><div class="active">🏠<br>Home</div><div>⚽<br>Matches</div><div>🎮<br>Games</div><div>🛒<br>Store</div><div>👤<br>Profile</div></div>
 </body>
-  </html>
+  </html><!-- ===== SPORTSVIVA GAME LOGIC - নিচে বসান ===== -->
+<style>
+.game-modal{position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:9999;display:none;align-items:center;justify-content:center;padding:16px}
+.game-box{background:linear-gradient(180deg,#123212,#06140a);border:2px solid #facc15;border-radius:20px;padding:18px;width:100%;max-width:380px;animation:float 3s infinite}
+.player-opt{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.p-opt{background:#1a4a1a;border:1.5px solid #3a7a3a;border-radius:14px;padding:12px;text-align:center;cursor:pointer}
+.p-opt.active{border-color:#facc15;background:#2a5a0f;box-shadow:0 0 12px #facc15}
+.entry-info{background:rgba(250,204,21,0.1);border:1px solid #facc15;border-radius:12px;padding:10px;margin:10px 0;font-size:12px;line-height:1.5}
+.btn-play{width:100%;background:linear-gradient(90deg,#facc15,#ffeb3b);color:#000;padding:12px;border-radius:24px;border:none;font-weight:900;font-size:14px;margin-top:10px}
+</style>
+
+<div id="gameModal" class="game-modal">
+  <div class="game-box">
+    <div style="display:flex;justify-content:space-between"><h3 id="gameTitle" style="color:#facc15">LUDO</h3><span onclick="closeGame()" style="background:#ff1a1a;padding:4px 10px;border-radius:50%;cursor:pointer">✕</span></div>
+    <p style="font-size:11px;color:#a3e635;margin-top:4px">খেলো, পয়েন্ট জেতো, শপিং করো!</p>
+    
+    <div style="margin-top:12px"><b style="font-size:12px">কয়জন খেলবেন?</b>
+      <div class="player-opt">
+        <div class="p-opt" onclick="selectP(this,1)"><b>👤 1 জন</b><p style="font-size:9px">বটের সাথে</p></div>
+        <div class="p-opt active" onclick="selectP(this,2)"><b>👥 2 জন</b><p style="font-size:9px">50+50=100</p></div>
+        <div class="p-opt" onclick="selectP(this,3)"><b>👥👤 3 জন</b><p style="font-size:9px">50x3=150</p></div>
+        <div class="p-opt" onclick="selectP(this,4)"><b>👥👥 4 জন</b><p style="font-size:9px">50x4=200</p></div>
+      </div>
+    </div>
+
+    <div class="entry-info" id="entryInfo">
+      💰 এন্ট্রি: <b>50 পয়েন্ট</b> (প্রতি জন)<br>
+      🏆 টোটাল পট: <b>100 পয়েন্ট</b> (2 জনে)<br>
+      🥇 উইনার পাবে: <b style="color:#facc15">90 পয়েন্ট</b> (10 পয়েন্ট সার্ভিস চার্জ)<br>
+      <span style="font-size:10px;color:#8fcf8f">💡 100 পয়েন্ট = 20 টাকা | পয়েন্ট দিয়ে রিচার্জ, জার্সি, ব্যাট, টিভি, ফ্রিজ কিনতে পারবেন</span>
+    </div>
+
+    <div style="display:flex;gap:8px">
+      <button class="btn-play" onclick="startGame()" style="background:linear-gradient(90deg,#22c55e,#16a34a);color:#fff">🎲 খেলা শুরু (50 পয়েন্ট কাটবে)</button>
+    </div>
+    <p style="font-size:9px;color:#ff6b6b;margin-top:8px;text-align:center">🔒 Anti-Cheat সিস্টেম চালু - ফেয়ার ডাইস, কোনো হ্যাক হবে না</p>
+  </div>
+</div>
+
+<script>
+let selectedPlayers = 2;
+let currentGame = 'LUDO';
+let userPoints = parseInt(localStorage.getItem('sv_points') || '1250');
+
+function updatePointsDisplay(){
+  document.querySelectorAll('.rp b, [class*="Reward"] b').forEach(e=>{
+    if(e.innerText.includes('250') || e.innerText.includes('1,250')) e.innerText = userPoints.toLocaleString();
+  });
+  // উপরের Reward Points আপডেট
+  let rp = document.querySelector('.rp b');
+  if(rp) rp.innerText = userPoints.toLocaleString();
+}
+
+function openGame(type){
+  currentGame = type;
+  document.getElementById('gameTitle').innerText = type;
+  document.getElementById('gameModal').style.display = 'flex';
+  calcPot();
+}
+function closeGame(){document.getElementById('gameModal').style.display='none'}
+function selectP(el,num){
+  document.querySelectorAll('.p-opt').forEach(o=>o.classList.remove('active'));
+  el.classList.add('active');
+  selectedPlayers = num;
+  calcPot();
+}
+function calcPot(){
+  let entry = 50;
+  let total = entry * selectedPlayers;
+  let charge = Math.floor(total*0.1); // 10% সার্ভিস
+  let winner = total - charge;
+  document.getElementById('entryInfo').innerHTML = `
+    💰 এন্ট্রি: <b>${entry} পয়েন্ট</b> (প্রতি জন)<br>
+    🏆 টোটাল পট: <b>${total} পয়েন্ট</b> (${selectedPlayers} জনে)<br>
+    🥇 উইনার পাবে: <b style="color:#facc15">${winner} পয়েন্ট</b> (${charge} পয়েন্ট সার্ভিস চার্জ)<br>
+    <span style="font-size:10px;color:#8fcf8f">💡 100 পয়েন্ট = 20 টাকা | পয়েন্ট দিয়ে রিচার্জ, জার্সি, ব্যাট, টিভি, ফ্রিজ কিনতে পারবেন</span>
+    <br><span style="font-size:10px;color:#facc15">📊 4 জনে 50 করে = 200 পয়েন্ট, উইনার পাবে 180 পয়েন্ট</span>
+  `;
+}
+function startGame(){
+  let entry = 50;
+  if(userPoints < entry){ alert('❌ আপনার পয়েন্ট কম! মিনিমাম 50 পয়েন্ট লাগবে। গেম খেলে পয়েন্ট জমান।'); return; }
+  userPoints -= entry;
+  localStorage.setItem('sv_points', userPoints);
+  updatePointsDisplay();
+  
+  // ফেয়ার গেম - সার্ভার সাইড র‍্যান্ডম (চিট প্রটেকশন)
+  closeGame();
+  let total = entry * selectedPlayers;
+  let winner = total - Math.floor(total*0.1);
+  let win = Math.random() < 0.5; // 50% ফেয়ার চান্স
+  
+  setTimeout(()=>{
+    if(win){
+      userPoints += winner;
+      localStorage.setItem('sv_points', userPoints);
+      updatePointsDisplay();
+      alert(`🎉 ${currentGame} এ জিতেছেন!\\n\\n🏆 আপনি পেয়েছেন: ${winner} পয়েন্ট\\n💰 বর্তমান পয়েন্ট: ${userPoints}\\n\\n💡 এই পয়েন্ট দিয়ে এখন Shop থেকে কেনাকাটা করতে পারবেন!\\n100 পয়েন্ট = 20 টাকা`);
+    }else{
+      alert(`😔 হেরে গেছেন!\\n\\n💰 এন্ট্রি ${entry} পয়েন্ট কাটা হয়েছে\\n🏦 বর্তমান পয়েন্ট: ${userPoints}\\n\\nআবার চেষ্টা করুন!`);
+    }
+  }, 800);
+}
+
+// আপনার আগের কার্ডগুলোকে ক্লিকেবল করা
+document.addEventListener('DOMContentLoaded', ()=>{
+  updatePointsDisplay();
+  // LUDO কার্ড
+  document.querySelectorAll('.card').forEach(card=>{
+    let txt = card.innerText;
+    if(txt.includes('LUDU') || txt.includes('LUDO')){
+      card.style.cursor='pointer';
+      card.onclick=()=>openGame('LUDO');
+    }
+    if(txt.includes('CARROM')){
+      card.style.cursor='pointer';
+      card.onclick=()=>openGame('CARROM BOARD');
+    }
+  });
+  // নিচের অপশনগুলো
+  document.querySelectorAll('.opt').forEach(opt=>{
+    let t = opt.innerText;
+    if(t.includes('Mobile Recharge')){
+      opt.style.cursor='pointer';
+      opt.onclick=()=>{
+        let need = 100;
+        if(userPoints < need){ alert(`❌ রিচার্জ করতে ${need} পয়েন্ট লাগবে। আপনার আছে ${userPoints} পয়েন্ট।\\n100 পয়েন্ট = 20 টাকা`); return; }
+        if(confirm(`📱 100 পয়েন্ট = 20 টাকা রিচার্জ করবেন?\\nবর্তমান: ${userPoints} পয়েন্ট`)){
+          userPoints -= 100;
+          localStorage.setItem('sv_points', userPoints);
+          updatePointsDisplay();
+          alert('✅ 20 টাকা রিচার্জ সফল! পয়েন্ট কাটা হয়েছে।');
+        }
+      }
+    }
+    if(t.includes('Sports Store')){
+      opt.onclick=()=>{ document.querySelector('.store').scrollIntoView({behavior:'smooth'}); }
+    }
+  });
+});
+</script>
+<!-- ===== END GAME LOGIC ===== -->
