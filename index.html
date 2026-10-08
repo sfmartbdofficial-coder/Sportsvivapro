@@ -209,29 +209,20 @@ function calcPot(){
   
   <script src="game.js"></script>
  
-<style>
-/* CRICKET LIVE ঠিক করার জন্য - ভাই এটাই শেষ */
-div:has(> div){overflow:visible !important;}
-body{padding-top:0 !important;}
-div[style*="Bangladesh vs"]{margin-top:50px !important;}
-</style>
 
 <script>
-// CRICKET LIVE লেখা মাঝখানে আনার জন্য
-setTimeout(()=>{
-  let divs = document.querySelectorAll('div');
-  divs.forEach(d=>{
-    if(d.innerText && d.innerText.includes('CRICKET LIVE')){
-      d.style.display='block';
-      d.style.marginTop='20px';
-      d.style.paddingTop='10px';
-      d.style.position='relative';
-      d.style.top='0px';
-      d.style.visibility='visible';
-      d.style.opacity='1';
+window.addEventListener('load', function(){
+  document.querySelectorAll('div').forEach(el=>{
+    if(el.innerText && el.innerText.trim().startsWith('CRICKET LIVE')){
+      el.style.marginTop = '12px';
+      el.style.position = 'relative';
+      if(el.parentElement){
+        el.parentElement.style.overflow = 'visible';
+        el.parentElement.style.paddingTop = '18px';
+      }
     }
   });
-},500);
+});
 </script>
 </body>
 </html>
